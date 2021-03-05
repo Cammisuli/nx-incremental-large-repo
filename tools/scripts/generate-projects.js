@@ -1,11 +1,11 @@
 const cp = require('child_process');
 const fs = require('fs');
 
-const INIT_APP_INDEX = 4;
+const INIT_APP_INDEX = 5;
 const NUMBER_OF_APPS = 1;
 const NUMBER_OF_LIBS = 100;
-const NUMBER_OF_CHILD_LIBS = 10;
-const NUMBER_OF_COMPONENTS = 2;
+const NUMBER_OF_CHILD_LIBS = 0;
+const NUMBER_OF_COMPONENTS = 0;
 
 function generate() {
   const appNames = [];
