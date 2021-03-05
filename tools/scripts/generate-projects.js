@@ -1,11 +1,11 @@
 const cp = require('child_process');
 const fs = require('fs');
 
-const INIT_APP_INDEX = 0;
+const INIT_APP_INDEX = 4;
 const NUMBER_OF_APPS = 1;
-const NUMBER_OF_LIBS = 5;
+const NUMBER_OF_LIBS = 100;
 const NUMBER_OF_CHILD_LIBS = 10;
-const NUMBER_OF_COMPONENTS = 50;
+const NUMBER_OF_COMPONENTS = 2;
 
 function generate() {
   const appNames = [];
@@ -14,7 +14,7 @@ function generate() {
     appNames.push(`app${i}`);
   }
 
-  appNames.forEach(appName => generateApp(appName));
+  appNames.forEach((appName) => generateApp(appName));
 }
 
 function generateApp(appName) {
@@ -26,12 +26,12 @@ function generateApp(appName) {
     libNames.push(`lib${i}`);
   }
 
-  libNames.forEach(libName => {
+  libNames.forEach((libName) => {
     generateParentLib(appName, libName);
   });
 
   const selectors = libNames
-    .map(c => `<largerepo-${c}parent></largerepo-${c}parent>`)
+    .map((c) => `<largerepo-${c}parent></largerepo-${c}parent>`)
     .join('\n');
   fs.writeFileSync(
     `apps/${appName}/src/app/app.component.html`,
@@ -43,21 +43,21 @@ function generateApp(appName) {
   );
 
   const imports = libNames
-  .map(
-    libName =>
-      `import { ${moduleName(
-        libName
-      )} } from '@largerepo/${appName}/${libName}/${libName}';`
-  )
-  .join('\n');
+    .map(
+      (libName) =>
+        `import { ${moduleName(
+          libName
+        )} } from '@largerepo/${appName}/${libName}/${libName}';`
+    )
+    .join('\n');
 
   const moduleImports = libNames
-  .map(childLibName => moduleName(childLibName))
-  .join(', ');
+    .map((childLibName) => moduleName(childLibName))
+    .join(', ');
 
-fs.writeFileSync(
-  `apps/${appName}/src/app/app.module.ts`,
-`
+  fs.writeFileSync(
+    `apps/${appName}/src/app/app.module.ts`,
+    `
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -74,12 +74,12 @@ import { AppComponent } from './app.component';
 export class AppModule {}
 
 `
-);
+  );
 }
 
 function generateParentLib(appName, libName) {
   cp.execSync(
-    `nx g @nrwl/angular:lib ${libName} --directory=${appName}/${libName} --simpleModuleName --publishable`
+    `nx g @nrwl/angular:lib ${libName} --directory=${appName}/${libName} --simpleModuleName`
   );
 
   const libNames = [];
@@ -88,20 +88,20 @@ function generateParentLib(appName, libName) {
     libNames.push(`childlib${i}`);
   }
 
-  libNames.forEach(childLibName => {
+  libNames.forEach((childLibName) => {
     generateChildLib(appName, libName, childLibName);
   });
 
   const imports = libNames
     .map(
-      childLibName =>
+      (childLibName) =>
         `import { ${moduleName(
           childLibName
         )} } from '@largerepo/${appName}/${libName}/${childLibName}';`
     )
     .join('\n');
   const moduleImports = libNames
-    .map(childLibName => moduleName(childLibName))
+    .map((childLibName) => moduleName(childLibName))
     .join(', ');
 
   fs.writeFileSync(
@@ -123,7 +123,9 @@ function generateParentLib(appName, libName) {
     `nx g @nrwl/angular:component ${libName}parent --project=${appName}-${libName}-${libName} --export`
   );
   const selectors = libNames
-    .map(c => `<largerepo-${libName}${c}parent></largerepo-${libName}${c}parent>`)
+    .map(
+      (c) => `<largerepo-${libName}${c}parent></largerepo-${libName}${c}parent>`
+    )
     .join('\n');
   fs.writeFileSync(
     `libs/${appName}/${libName}/${libName}/src/lib/${libName}parent/${libName}parent.component.html`,
@@ -137,7 +139,7 @@ function generateParentLib(appName, libName) {
 
 function generateChildLib(appName, libName, childLibName) {
   cp.execSync(
-    `nx g @nrwl/angular:lib ${childLibName} --directory=${appName}/${libName} --simpleModuleName --publishable`
+    `nx g @nrwl/angular:lib ${childLibName} --directory=${appName}/${libName} --simpleModuleName`
   );
 
   const componentNames = [];
@@ -146,7 +148,7 @@ function generateChildLib(appName, libName, childLibName) {
     componentNames.push(`${libName}${childLibName}component${i}`);
   }
 
-  componentNames.forEach(componentName => {
+  componentNames.forEach((componentName) => {
     cp.execSync(
       `nx g @nrwl/angular:component ${componentName}  --project=${appName}-${libName}-${childLibName}`
     );
@@ -157,7 +159,7 @@ function generateChildLib(appName, libName, childLibName) {
   );
 
   const selectors = componentNames
-    .map(c => `<largerepo-${c}></largerepo-${c}>`)
+    .map((c) => `<largerepo-${c}></largerepo-${c}>`)
     .join('\n');
 
   fs.writeFileSync(

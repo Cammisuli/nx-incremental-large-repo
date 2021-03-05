@@ -1,0 +1,15 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'largerepo-lib34childlib8parent',
+  templateUrl: './lib34childlib8parent.component.html',
+  styleUrls: ['./lib34childlib8parent.component.css']
+})
+export class Lib34childlib8parentComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}

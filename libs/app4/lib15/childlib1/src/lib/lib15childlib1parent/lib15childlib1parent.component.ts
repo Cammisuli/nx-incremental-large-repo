@@ -1,0 +1,15 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'largerepo-lib15childlib1parent',
+  templateUrl: './lib15childlib1parent.component.html',
+  styleUrls: ['./lib15childlib1parent.component.css']
+})
+export class Lib15childlib1parentComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
