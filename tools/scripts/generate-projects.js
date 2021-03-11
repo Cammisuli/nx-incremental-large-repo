@@ -1,9 +1,9 @@
 const cp = require('child_process');
 const fs = require('fs');
 
-const INIT_APP_INDEX = 5;
+const INIT_APP_INDEX = 6;
 const NUMBER_OF_APPS = 1;
-const NUMBER_OF_LIBS = 100;
+const NUMBER_OF_LIBS = 300;
 const NUMBER_OF_CHILD_LIBS = 0;
 const NUMBER_OF_COMPONENTS = 0;
 
@@ -79,7 +79,7 @@ export class AppModule {}
 
 function generateParentLib(appName, libName) {
   cp.execSync(
-    `nx g @nrwl/angular:lib ${libName} --directory=${appName}/${libName} --simpleModuleName`
+    `nx g @nrwl/angular:lib ${libName} --directory=${appName}/${libName} --simpleModuleName --skip-format`
   );
 
   const libNames = [];
@@ -120,7 +120,7 @@ function generateParentLib(appName, libName) {
   );
 
   cp.execSync(
-    `nx g @nrwl/angular:component ${libName}parent --project=${appName}-${libName}-${libName} --export`
+    `nx g @nrwl/angular:component ${libName}parent --project=${appName}-${libName}-${libName} --export --skip-format`
   );
   const selectors = libNames
     .map(
@@ -139,7 +139,7 @@ function generateParentLib(appName, libName) {
 
 function generateChildLib(appName, libName, childLibName) {
   cp.execSync(
-    `nx g @nrwl/angular:lib ${childLibName} --directory=${appName}/${libName} --simpleModuleName`
+    `nx g @nrwl/angular:lib ${childLibName} --directory=${appName}/${libName} --simpleModuleName --skip-format`
   );
 
   const componentNames = [];
@@ -155,7 +155,7 @@ function generateChildLib(appName, libName, childLibName) {
   });
 
   cp.execSync(
-    `nx g @nrwl/angular:component ${libName}${childLibName}parent --project=${appName}-${libName}-${childLibName} --export`
+    `nx g @nrwl/angular:component ${libName}${childLibName}parent --project=${appName}-${libName}-${childLibName} --export --skip-format`
   );
 
   const selectors = componentNames
