@@ -1,7 +1,7 @@
 const cp = require('child_process');
 const fs = require('fs');
 
-const INIT_APP_INDEX = 6;
+const INIT_APP_INDEX = 7;
 const NUMBER_OF_APPS = 1;
 const NUMBER_OF_LIBS = 300;
 const NUMBER_OF_CHILD_LIBS = 0;
@@ -18,6 +18,7 @@ function generate() {
 }
 
 function generateApp(appName) {
+  console.log(`generating app ${appName}`)
   cp.execSync(`nx g @nrwl/angular:app ${appName} --no-interactive`);
 
   const libNames = [];
@@ -78,6 +79,8 @@ export class AppModule {}
 }
 
 function generateParentLib(appName, libName) {
+  console.log(`generating lib ${libName}`)
+
   cp.execSync(
     `nx g @nrwl/angular:lib ${libName} --directory=${appName}/${libName} --simpleModuleName --skip-format`
   );
@@ -138,6 +141,8 @@ function generateParentLib(appName, libName) {
 }
 
 function generateChildLib(appName, libName, childLibName) {
+  console.log(`generating child lib ${childLibName}`)
+
   cp.execSync(
     `nx g @nrwl/angular:lib ${childLibName} --directory=${appName}/${libName} --simpleModuleName --skip-format`
   );

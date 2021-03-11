@@ -1,0 +1,7 @@
+# app7-lib277-lib277
+
+This library was generated with [Nx](https://nx.dev).
+
+## Running unit tests
+
+Run `nx test app7-lib277-lib277` to execute the unit tests.
