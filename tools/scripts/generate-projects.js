@@ -1,9 +1,9 @@
 const cp = require('child_process');
 const fs = require('fs');
 
-const INIT_APP_INDEX = 7;
+const INIT_APP_INDEX = 10;
 const NUMBER_OF_APPS = 1;
-const NUMBER_OF_LIBS = 300;
+const NUMBER_OF_LIBS = 500;
 const NUMBER_OF_CHILD_LIBS = 0;
 const NUMBER_OF_COMPONENTS = 0;
 
@@ -18,7 +18,7 @@ function generate() {
 }
 
 function generateApp(appName) {
-  console.log(`generating app ${appName}`)
+  console.log(`generating app ${appName}`);
   cp.execSync(`nx g @nrwl/angular:app ${appName} --no-interactive`);
 
   const libNames = [];
@@ -79,10 +79,10 @@ export class AppModule {}
 }
 
 function generateParentLib(appName, libName) {
-  console.log(`generating lib ${libName}`)
+  console.log(`generating lib ${libName}`);
 
   cp.execSync(
-    `nx g @nrwl/angular:lib ${libName} --directory=${appName}/${libName} --simpleModuleName --skip-format`
+    `nx g @nrwl/angular:lib ${libName} --directory=${appName}/${libName} --simpleModuleName --skipFormat=true`
   );
 
   const libNames = [];
@@ -123,7 +123,7 @@ function generateParentLib(appName, libName) {
   );
 
   cp.execSync(
-    `nx g @nrwl/angular:component ${libName}parent --project=${appName}-${libName}-${libName} --export --skip-format`
+    `nx g @nrwl/angular:component ${libName}parent --project=${appName}-${libName}-${libName} --export --skipFormat=true`
   );
   const selectors = libNames
     .map(
@@ -141,10 +141,10 @@ function generateParentLib(appName, libName) {
 }
 
 function generateChildLib(appName, libName, childLibName) {
-  console.log(`generating child lib ${childLibName}`)
+  console.log(`generating child lib ${childLibName}`);
 
   cp.execSync(
-    `nx g @nrwl/angular:lib ${childLibName} --directory=${appName}/${libName} --simpleModuleName --skip-format`
+    `nx g @nrwl/angular:lib ${childLibName} --directory=${appName}/${libName} --simpleModuleName --skipFormat=true`
   );
 
   const componentNames = [];
@@ -160,7 +160,7 @@ function generateChildLib(appName, libName, childLibName) {
   });
 
   cp.execSync(
-    `nx g @nrwl/angular:component ${libName}${childLibName}parent --project=${appName}-${libName}-${childLibName} --export --skip-format`
+    `nx g @nrwl/angular:component ${libName}${childLibName}parent --project=${appName}-${libName}-${childLibName} --export --skipFormat=true`
   );
 
   const selectors = componentNames

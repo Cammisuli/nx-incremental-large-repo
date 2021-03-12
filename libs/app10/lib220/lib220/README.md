@@ -1,0 +1,7 @@
+# app10-lib220-lib220
+
+This library was generated with [Nx](https://nx.dev).
+
+## Running unit tests
+
+Run `nx test app10-lib220-lib220` to execute the unit tests.
